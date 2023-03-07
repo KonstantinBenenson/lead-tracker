@@ -6,35 +6,30 @@ const inputEl = document.getElementById("input-el")
 const inputBtn = document.getElementById("input-btn")
 const ulEl = document.getElementById("ul-el")
 
-let testLead = "www.ya.ru"
-
-inputBtn.addEventListener("click", function() {
+inputBtn.addEventListener("click", function () {
     let lead = inputEl.value
-    // if (contains(lead, myLeads) === false)
-    if (myLeads.includes(lead) !== true)
-        myLeads.push(lead)
-    
-    renderUnorderedList()
+    myLeads.push(lead)
+    pushToHtmlHandler(lead)
+    inputEl.value = ""
 })
 
-// function contains(el, ...array) {
-//     for (let i = 0; i < array.length; i++)
-//     {
-//         if (array[0] === el)
-//             return true
-//     }
-//     return false
-// }
+let htmlEl = ""
 
-function renderUnorderedList () {
-    for (let i = 0; i < myLeads.length; i++)
-    {
-        ulEl.innerHTML += "<li>" + myLeads[i] + "</li>"
-
-        // An alternative way to append an <li> elemement with its containts to the Unordered List
-        // const li = document.createElement("li")
-        // li.textContent = myLeads[i]
-        // ulEl.innerHTML(li)
-    }
+function pushToHtmlHandler(lead) {
+    // An alternative way to append an <li> elemement with its containts to the Unordered List
+    // const li = document.createElement("li")
+    // li.textContent = myLeads[i]
+    // ulEl.innerHTML(li)
+    htmlEl += `<li>
+                <a target="_blank" href="${lead}">${lead}</a>
+               </li>`
+    
+    ulEl.innerHTML = htmlEl
 }
+
+// function onDelete () {
+//     // How to create a delete process?
+// }
+    
+
 
