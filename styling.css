@@ -18,30 +18,46 @@ input {
     padding-left: 10px;
     padding-right: 10px;
     height: 25px;
+    width: 250px;
 }
 
 button {
-    background-color: rgb(52, 189, 52);
     color: white;
     border: 1px solid;
     border-radius: 5px;
-    border-color: rgb(149, 229, 149);
     width: 100px;
     height: 35px;
     padding: 0%;
     margin-top: 5px;
-    font-size: medium;
+    font-size: small;
     margin-right: 10px;    
+    font-weight: bold;
+}
+
+#input-btn {
+    border-color: rgb(149, 229, 149);
+    background-color: rgba(52, 189, 52, 0.801);
 }
 
 #clear-btn {
-    background-color: rgb(226, 52, 52);
+    background-color: rgba(226, 52, 52, 0.801);
+    border-color: rgb(211, 121, 121);
+}
+
+#tab-btn {
+    background-color: rgba(49, 118, 145, 0.801);
+    border-color: rgb(27, 132, 173);
 }
 
 ul {
     list-style: none;
     padding-left: 0;
-    margin-top: 2px;
+    margin-top: 15px;
+}
+
+li {
+    margin-top: 10px;
+    margin-left: 3px;
 }
 
 li a {

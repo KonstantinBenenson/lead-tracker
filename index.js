@@ -6,54 +6,61 @@ const inputKey = document.getElementById("input-key")
 const inputVal = document.getElementById("input-value")
 const inputBtn = document.getElementById("input-btn")
 const clearBtn = document.getElementById("clear-btn")
+const tabBtn = document.getElementById("tab-btn")
 const ulEl = document.getElementById("ul-el")
+
+// const tabPath = window.location.pathname
+// const tab = [
+//     { "url": tabPath }
+// ]
+
+tabBtn.addEventListener("click", function () {
+    chrome.tabs.query({ active: true, currentWindow: true }, function (tabs) {
+        inputVal.value = tabs[0].url
+    })
+})
 
 let htmlEl = ""
 
+// The logic below provides the funcionality to show the data that is stored in localStorage to the page after each refresh.  
+const temporaryList = JSON.parse(localStorage.getItem("leads")) // Try to get the list of the saved list into the temporary list.
+if (temporaryList) // If it is not falsy (meaning there is something inside) we dump it to the array and show on the page.
+{
+    myLeads = temporaryList
+    showList(myLeads)
+}
+// ------ //
+
 inputBtn.addEventListener("click", function () {
-    let key = inputKey.value
-    let lead = inputVal.value    
+    // let key = inputKey.value // May be use it to store each lead separatly in the different object
+    let lead = inputVal.value
     myLeads.push(lead)
-    // pushToHtmlHandler(lead)
     localStorage.setItem("leads", JSON.stringify(myLeads))
-    showList()
+    showList(myLeads)
     inputKey.value = ""
     inputVal.value = ""
 })
 
-// function pushToHtmlHandler(lead) {
-//     // An alternative way to append an <li> elemement with its containts to the Unordered List
-//     // const li = document.createElement("li")
-//     // li.textContent = myLeads[i]
-//     // ulEl.innerHTML(li)
-//     htmlEl += `<li>
-//                 <a target="_blank" href="${lead}">${lead}</a>
-//                </li>`
-    
-//     ulEl.innerHTML = htmlEl
-// }
-
-function showList() {
-    myLeads = JSON.parse(localStorage.getItem("leads"))
+function showList(arr) {
     htmlEl = ""
-    for (let i = 0; i < myLeads.length; i++)
-    {
+    for (let i = 0; i < arr.length; i++) {
         htmlEl += `<li>
-                      <a target="_blank" href="${myLeads[i]}">${myLeads[i]}</a>
+                      <a target="_blank" href="${arr[i]}">${arr[i]}</a>
                    </li>`
     }
     ulEl.innerHTML = htmlEl
 }
 
 // Clear the set of leads pushed to the localStorage and after - refres the leads list shown to the user.
-clearBtn.addEventListener("click", function() {
+clearBtn.addEventListener("dblclick", function () {
     localStorage.clear()
-    showList()
+    myLeads = []
+    showList(myLeads)
 })
 
-// function onDelete () {
-//     // How to create a delete process?
+// function deleteLead () {
+//     // How to create a delete process for a single lead?
 // }
-    
+
 
 
