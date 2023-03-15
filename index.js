@@ -1,5 +1,3 @@
-// An alternative way to call out a function when something is done with the html-element
-// The Onclick attribute is not needed in the html-line if this method is chosen
 let myLeads = []
 
 const inputKey = document.getElementById("input-key")
@@ -14,6 +12,9 @@ const ulEl = document.getElementById("ul-el")
 //     { "url": tabPath }
 // ]
 
+
+// An alternative way to call out a function when something is done with the html-element
+// The Onclick attribute is not needed in the html-line if this method is chosen
 tabBtn.addEventListener("click", function () {
     chrome.tabs.query({ active: true, currentWindow: true }, function (tabs) {
         inputVal.value = tabs[0].url
@@ -22,8 +23,8 @@ tabBtn.addEventListener("click", function () {
 
 let htmlEl = ""
 
-// The logic below provides the funcionality to show the data that is stored in localStorage to the page after each refresh.  
-const temporaryList = JSON.parse(localStorage.getItem("leads")) // Try to get the list of the saved list into the temporary list.
+// The logic below provides the functionality to show the data that is stored in localStorage to the page after each refresh.  
+const temporaryList = JSON.parse(localStorage.getItem("leads")) // Try to get the list of the saved values into the temporary holder.
 if (temporaryList) // If it is not falsy (meaning there is something inside) we dump it to the array and show on the page.
 {
     myLeads = temporaryList
@@ -51,7 +52,7 @@ function showList(arr) {
     ulEl.innerHTML = htmlEl
 }
 
-// Clear the set of leads pushed to the localStorage and after - refres the leads list shown to the user.
+// Clear the set of leads pushed to the localStorage and after - refresh the leads list shown to the user.
 clearBtn.addEventListener("dblclick", function () {
     localStorage.clear()
     myLeads = []
