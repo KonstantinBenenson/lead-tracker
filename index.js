@@ -4,6 +4,7 @@ const inputKey = document.getElementById("input-key")
 const inputVal = document.getElementById("input-value")
 const inputBtn = document.getElementById("input-btn")
 const clearBtn = document.getElementById("clear-btn")
+// const delBtn = document.getElementById("del-btn")
 const tabBtn = document.getElementById("tab-btn")
 const ulEl = document.getElementById("ul-el")
 
@@ -22,21 +23,25 @@ tabBtn.addEventListener("click", function () {
 })
 
 let htmlEl = ""
+let key = "leads"
 
 // The logic below provides the functionality to show the data that is stored in localStorage to the page after each refresh.  
-const temporaryList = JSON.parse(localStorage.getItem("leads")) // Try to get the list of the saved values into the temporary holder.
-if (temporaryList) // If it is not falsy (meaning there is something inside) we dump it to the array and show on the page.
-{
+const temporaryList = JSON.parse(localStorage.getItem(key)) // Try to get the list of the saved values into the temporary holder.
+function showAfterRefresh(){
     myLeads = temporaryList
     showList(myLeads)
 }
-// ------ //
+if (temporaryList) // If it is not falsy (meaning there is something inside) we dump it to the array and show on the page.
+{
+    showAfterRefresh()
+}
 
+// ------ //
 inputBtn.addEventListener("click", function () {
     // let key = inputKey.value // May be use it to store each lead separatly in the different object
     let lead = inputVal.value
     myLeads.push(lead)
-    localStorage.setItem("leads", JSON.stringify(myLeads))
+    localStorage.setItem(key, JSON.stringify(myLeads))
     showList(myLeads)
     inputKey.value = ""
     inputVal.value = ""
@@ -46,22 +51,44 @@ function showList(arr) {
     htmlEl = ""
     for (let i = 0; i < arr.length; i++) {
         htmlEl += `<li>
-                      <a target="_blank" href="${arr[i]}">${arr[i]}</a>
+                      <a target="_blank" id="${arr[i]}" href="${arr[i]}">${arr[i]}</a> 
+                      <button type="button" style="margin-left: 5px;
+                      background-color: rgba(231, 60, 54, 0.801);
+                      border-color: rgb(196, 122, 11);
+                      width: 70px;
+                      height: 25px;" onclick="dltLink(this)" id="${arr[i]}}">DELETE</button>
                    </li>`
     }
     ulEl.innerHTML = htmlEl
 }
 
 // Clear the set of leads pushed to the localStorage and after - refresh the leads list shown to the user.
-clearBtn.addEventListener("dblclick", function () {
+clearBtn.addEventListener("dblclick", function () {    
     localStorage.clear()
     myLeads = []
     showList(myLeads)
 })
 
-// function deleteLead () {
-//     // How to create a delete process for a single lead?
-// }
+// Allows to remove a chosen lead with a Delete button.
+// Refreshes a list after it removes an element.
+function dltLink(obj) {
+    let id = obj.id
+    let linkIdx = ""
+    let currentLeads = JSON.parse(localStorage.getItem(key))
+    myLeads = currentLeads
+    for (let i = 0; i < myLeads.length; i++)
+    {
+        if (myLeads[i] === id)
+        {
+            linkIdx === i
+        }        
+    }
+    myLeads.splice(linkIdx, 1)
+    localStorage.clear() 
+    localStorage.setItem(key, JSON.stringify(myLeads))
+    showList(myLeads)
+}
+
 
 
 
